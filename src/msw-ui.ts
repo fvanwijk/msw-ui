@@ -24,7 +24,7 @@ const hasWorker = (worker?: SetupWorkerApi): worker is SetupWorkerApi => {
 
 // Initial handlers to register with worker
 export const getDefaultHandlers = (): RestHandler[] =>
-  Object.values(scenariosPerHandler).flatMap(handler => Object.values(handler)[0]);
+  Object.values(scenariosPerHandler).map(handler => Object.values(handler)[0]);
 
 // Set all default handlers
 export const setDefaultHandlers = (): void => {
