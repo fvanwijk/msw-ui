@@ -23,10 +23,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
-import { setScenario, setScenarioForHandler } from '../msw-ui';
 import { scenariosPerHandler } from '@/mocks';
 
 export default defineComponent({
