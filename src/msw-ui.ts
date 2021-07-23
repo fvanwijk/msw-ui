@@ -22,6 +22,17 @@ const hasWorker = (worker?: SetupWorkerApi): worker is SetupWorkerApi => {
   return true;
 };
 
+// Initial handlers to register with worker
+export const getDefaultHandlers = (): RestHandler[] =>
+  Object.values(scenariosPerHandler).flatMap(handler => Object.values(handler)[0]);
+
+// Set all default handlers
+export const setDefaultHandlers = (): void => {
+  if (hasWorker(worker)) {
+    worker.use(...getDefaultHandlers());
+  }
+};
+
 // This helper uses scenarios that are global and not per endpoint.
 // So you can set a predefined set of responses for endpoints
 export const setScenario = (scenarioName: string): void => {
