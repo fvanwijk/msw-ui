@@ -17,7 +17,7 @@ This component renders a simple but effective UI to quickly activate one of the 
 ## How to use
 
 1. `npm install msw-ui -D`
-2. Add MSW to your project (see MSW docs)
+2. Add MSW to your project (see [MSW docs](https://mswjs.io/docs/getting-started/integrate/browser))
 3. Define global scenarios and/or scenarios per endpoint, for example
 
 ```typescript
@@ -77,6 +77,8 @@ const routes: Array<RouteRecordRaw> = [
 
 - Despite these docs say you can install MSW-UI via npm, it isn't published yet. So for now you need to copy msw-ui.ts and optionally MSW-UI.Vue into your own project.
 - When you hard refresh the page, the MSW client is reinitialized so that all handlers are gone. You also can't see which scenarios are currently active. This is a MSW shortcoming which could be implemented in MSW-UI.
+- Theoretically all the scenario stuff should also work in Node but I haven't tested it yet. The use case is also less strong because usually you use MSW in unit tests and you will set mocks manually during a specific test.
+- This project is not unit tested yet. How ironic.
 
 ## Run example locally
 
