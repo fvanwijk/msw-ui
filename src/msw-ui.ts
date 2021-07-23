@@ -1,11 +1,11 @@
 import { DefaultRequestBody, MockedRequest, rest, RestHandler } from 'msw';
 import { handlers } from './handlers';
-import { scenarios, scenariosPerHandler } from './mocks';
+import { scenariosPerHandler } from './mocks';
 import worker from './msw-init';
 
 // This helper uses scenarios that are global and not per endpoint.
 // So you can set a predefined set of responses for endpoints
-export const registerAdminHandler = (): RestHandler<MockedRequest<DefaultRequestBody>> => {
+export const registerAdminHandler = (scenarios: Record<string, RestHandler[]>): RestHandler => {
   const adminHandler = rest.put<{ scenario?: string }>('/scenario', (req, res, ctx) => {
     const scenarioName = req.body.scenario;
     if (!scenarioName) {
