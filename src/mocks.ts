@@ -25,7 +25,7 @@ export const scenariosPerHandler: Record<string, Record<string, RestHandler>> = 
     'fail users': rest.get('/users', usersFail),
   },
   'GET /user/:id': {
-    success: rest.get('/user/:id', usersSuccess),
-    fail: rest.get('/user/:id', usersFail),
+    'success user': rest.get('/user/:id', userSuccess),
+    'fail user': rest.get('/user/:id', userFail),
   },
 };
