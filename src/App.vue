@@ -1,5 +1,11 @@
 <template>
-  <router-view />
+  <div>
+    <div class="app-bar">
+      <router-link to="/" class="link">Home</router-link>
+      <router-link to="/msw-ui" class="link">MSW UI</router-link>
+    </div>
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
@@ -33,5 +39,14 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.app-bar {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #2c3e50;
+}
+
+.link {
+  margin-right: 1rem;
 }
 </style>
