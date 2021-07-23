@@ -2,9 +2,33 @@
   <div>
     <h1>MSW UI</h1>
     <p>Configure MSW responses using scenarios!</p>
-    Set scenario:
+    Set global scenario:
     <button @click="setScenario('success')">Success</button>
     <button @click="setScenario('fail')">Fail</button>
+    <p>Set scenario per handler</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Path</th>
+          <th>Scenario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(handler, i) of handlers" :key="i">
+          <td>{{ handler.info.method }}</td>
+          <td>{{ handler.info.mask }}</td>
+          <td>
+            <select>
+              <option v-for="(x, scenarioName) of scenariosPerHandler[handler.info.header]" :key="scenarioName">
+                {{ scenarioName }}
+              </option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
     <div>
       <button
         @click="
@@ -31,6 +55,8 @@ import { defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
 import { setScenario } from '../msw-ui';
+import { handlers } from '@/handlers';
+import { scenariosPerHandler } from '@/mocks';
 
 export default defineComponent({
   name: 'Home',
@@ -51,8 +77,10 @@ export default defineComponent({
     return {
       errorUser,
       errorUsers,
+      handlers,
       loadingUser,
       loadingUsers,
+      scenariosPerHandler,
       refetchUser,
       refetchUsers,
       setScenario,
