@@ -59,7 +59,7 @@ You could also skip step 4 and use the UI to set scenarios directly from the bro
 
 ```typescript
 // router/index.js
-import { MSWUI } from 'msw-ui';
+import MSWUI from 'msw-ui/src/components/MSW-UI.vue';
 
 const routes: Array<RouteRecordRaw> = [
   // ...
