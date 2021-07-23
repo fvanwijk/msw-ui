@@ -29,6 +29,7 @@ export const getDefaultHandlers = (): RestHandler[] =>
 // Set all default handlers
 export const setDefaultHandlers = (): void => {
   if (hasWorker(worker)) {
+    console.info('Set default mock handlers');
     worker.use(...getDefaultHandlers());
   }
 };
