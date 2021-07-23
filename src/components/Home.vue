@@ -3,8 +3,8 @@
     <h1>MSW UI</h1>
     <p>Configure MSW responses using scenarios!</p>
     Set scenario:
-    <button @click="setMockScenario('success')">Success</button>
-    <button @click="setMockScenario('fail')">Fail</button>
+    <button @click="setScenario('success')">Success</button>
+    <button @click="setScenario('fail')">Fail</button>
     <div>
       <button
         @click="
@@ -30,6 +30,7 @@
 import { defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
+import { setScenario } from '../msw-ui';
 
 export default defineComponent({
   name: 'Home',
@@ -47,13 +48,6 @@ export default defineComponent({
       refetch: refetchUsers,
     } = useQuery('users', fetchUsers);
 
-    const setMockScenario = (scenario: string) =>
-      fetch('/scenario', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ scenario }),
-      });
-
     return {
       errorUser,
       errorUsers,
@@ -61,7 +55,7 @@ export default defineComponent({
       loadingUsers,
       refetchUser,
       refetchUsers,
-      setMockScenario,
+      setScenario,
       user,
       users,
     };

@@ -1,26 +1,35 @@
 import { DefaultRequestBody, MockedRequest, rest, RestHandler } from 'msw';
 import { handlers } from './handlers';
 import { scenariosPerHandler } from './mocks';
-import worker from './msw-init';
+import worker, { scenarios } from './msw-init';
 
 // This helper uses scenarios that are global and not per endpoint.
 // So you can set a predefined set of responses for endpoints
-export const registerAdminHandler = (scenarios: Record<string, RestHandler[]>): RestHandler => {
+export const setScenario = (scenarioName: string): void => {
+  const handlers = scenarios[scenarioName];
+  if (!handlers) {
+    throw new Error(`Could not set scenario "${scenarioName}" because it does not exist`);
+  }
+
+  console.info('Set scenario', `"${scenarioName}"`);
+
+  worker.use(...handlers);
+};
+
+// Additional helper that does setScenario but via an MSW endpoint /scenario (not used but kept for reference in case we need it, in Cypress for example)
+export const registerAdminHandler = (): RestHandler => {
   const adminHandler = rest.put<{ scenario?: string }>('/scenario', (req, res, ctx) => {
     const scenarioName = req.body.scenario;
     if (!scenarioName) {
-      return res(ctx.status(400, 'Request body should have the form { scenario: "scenarioName" }'));
+      throw new Error(`'Request body should have the form { scenario: "scenarioName" }'`);
     }
+    try {
+      setScenario(scenarioName);
 
-    const scenario = scenarios[scenarioName];
-
-    if (!scenario) {
-      return res(ctx.status(400, `Could not set scenario ${scenarioName} because it does not exist`));
+      return res(ctx.status(200));
+    } catch (e) {
+      res(ctx.status(400, e.message));
     }
-
-    worker.use(...scenario);
-
-    return res(ctx.status(200));
   });
 
   console.info(`Register admin handler ${adminHandler.info.header}`);
