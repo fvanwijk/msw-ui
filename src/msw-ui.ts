@@ -55,3 +55,10 @@ export const setScenarioForHandler = (handlerName: string, scenarioName: string)
     worker.use(scenariosPerHandler[handlerName][scenarioName]);
   }
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+(window as Window).setScenario = setScenario;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+(window as Window).setScenarioForHandler = setScenarioForHandler;

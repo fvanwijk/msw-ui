@@ -12,11 +12,11 @@
       </button>
       <h2>User</h2>
       {{ loadingUser ? 'Loading&hellip;' : '' }}
-      {{ errorUser ? 'Error' : '' }}
+      <div v-if="errorUser" class="error">Error</div>
       <pre v-if="user && !errorUser">{{ JSON.stringify(user, null, 2) }}</pre>
       <h2>Users</h2>
       {{ loadingUsers ? 'Loading&hellip;' : '' }}
-      {{ errorUsers ? 'Error' : '' }}
+      <div v-if="errorUsers" class="error">Error</div>
       <pre v-if="users && !errorUsers">{{ JSON.stringify(users, null, 2) }}</pre>
     </div>
   </div>
