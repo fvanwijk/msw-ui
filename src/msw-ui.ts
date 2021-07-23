@@ -11,9 +11,14 @@ export const setScenario = (scenarioName: string): void => {
     throw new Error(`Could not set scenario "${scenarioName}" because it does not exist`);
   }
 
-  console.info('Set scenario', `"${scenarioName}"`);
+  console.info('Set global scenario', `"${scenarioName}"`);
 
   worker.use(...handlers);
+};
+
+export const setScenarioForHandler = (handlerName: string, scenarioName: string): void => {
+  console.info(`Set scenario for ${handlerName}`, `"${scenarioName}"`);
+  worker.use(scenariosPerHandler[handlerName][scenarioName]);
 };
 
 // Additional helper that does setScenario but via an MSW endpoint /scenario (not used but kept for reference in case we need it, in Cypress for example)

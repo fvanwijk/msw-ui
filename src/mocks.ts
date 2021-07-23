@@ -18,7 +18,7 @@ export const scenarios: Record<string, RestHandler[]> = {
   fail: [rest.get('/users', usersFail), rest.get('/user/:id', userFail)],
 };
 
-// Scenarios per handler (not in use yet)
+// Scenarios per handler
 export const scenariosPerHandler: Record<string, Record<string, RestHandler>> = {
   'GET /users': {
     'success users': rest.get('/users', usersSuccess),

@@ -19,8 +19,8 @@
           <td>{{ handler.info.method }}</td>
           <td>{{ handler.info.mask }}</td>
           <td>
-            <select>
-              <option v-for="(x, scenarioName) of scenariosPerHandler[handler.info.header]" :key="scenarioName">
+            <select @change="setScenarioForHandler(handler.info.header, $event.target.value)">
+              <option v-for="(scenario, scenarioName) of scenariosPerHandler[handler.info.header]" :key="scenarioName">
                 {{ scenarioName }}
               </option>
             </select>
@@ -54,7 +54,7 @@
 import { defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
-import { setScenario } from '../msw-ui';
+import { setScenario, setScenarioForHandler } from '../msw-ui';
 import { handlers } from '@/handlers';
 import { scenariosPerHandler } from '@/mocks';
 
@@ -84,6 +84,7 @@ export default defineComponent({
       refetchUser,
       refetchUsers,
       setScenario,
+      setScenarioForHandler,
       user,
       users,
     };
