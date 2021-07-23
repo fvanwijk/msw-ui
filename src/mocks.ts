@@ -29,3 +29,6 @@ export const scenariosPerHandler: Record<string, Record<string, RestHandler>> = 
     fail: rest.get('/user/:id', usersFail),
   },
 };
+
+// Initial handlers to register with worker
+export const handlers = Object.values(scenariosPerHandler).flatMap(handler => Object.values(handler)[0]);

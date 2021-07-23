@@ -1,11 +1,6 @@
-import { RestHandler, setupWorker } from 'msw';
-import { handlers } from './handlers';
+import { setupWorker } from 'msw';
+import { handlers } from './mocks';
 
-export let scenarios: Record<string, RestHandler[]> = {};
 const worker = setupWorker(...handlers);
 
 export default worker;
-
-export const registerScenarios = (newScenarios: Record<string, RestHandler[]>): void => {
-  scenarios = newScenarios;
-};

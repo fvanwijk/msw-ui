@@ -15,12 +15,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(handler, i) of handlers" :key="i">
-          <td>{{ handler.info.method }}</td>
-          <td>{{ handler.info.mask }}</td>
+        <tr v-for="{ mask, method, header } of handlers" :key="header">
+          <td>{{ method }}</td>
+          <td>{{ mask }}</td>
           <td>
-            <select @change="setScenarioForHandler(handler.info.header, $event.target.value)">
-              <option v-for="(scenario, scenarioName) of scenariosPerHandler[handler.info.header]" :key="scenarioName">
+            <select @change="setScenarioForHandler(header, $event.target.value)">
+              <option v-for="(scenario, scenarioName) of scenariosPerHandler[header]" :key="scenarioName">
                 {{ scenarioName }}
               </option>
             </select>
@@ -51,11 +51,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
 import { setScenario, setScenarioForHandler } from '../msw-ui';
-import { handlers } from '@/handlers';
 import { scenariosPerHandler } from '@/mocks';
 
 export default defineComponent({
@@ -77,7 +76,12 @@ export default defineComponent({
     return {
       errorUser,
       errorUsers,
-      handlers,
+      handlers: computed(() =>
+        Object.keys(scenariosPerHandler).map(header => {
+          const [method, mask] = header.split(' ');
+          return { header, method, mask };
+        })
+      ),
       loadingUser,
       loadingUsers,
       scenariosPerHandler,
