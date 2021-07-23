@@ -48,5 +48,6 @@
   "files": [
     "src/msw-ui.ts",
     "src/components/MSW-UI.vue"
-  ]
+  ],
+  "main": "src/msw-ui.ts"
 }
