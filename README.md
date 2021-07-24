@@ -25,12 +25,18 @@ This component renders a simple but effective UI to quickly activate one of the 
 
 // Global scenarios to set multiple endpoints
 export const scenarios: Record<string, RestHandler[]> = {
-  success: [rest.get('/users', usersSuccess), rest.get('/user/:id', userSuccess)],
+  success: [
+    rest.get('/users', usersSuccess),
+    rest.get('/user/:id', userSuccess),
+  ],
   fail: [rest.get('/users', usersFail), rest.get('/user/:id', userFail)],
 };
 
 // Scenarios per handler
-export const scenariosPerHandler: Record<string, Record<string, RestHandler>> = {
+export const scenariosPerHandler: Record<
+  string,
+  Record<string, RestHandler>
+> = {
   'GET /users': {
     'success users': rest.get('/users', usersSuccess),
     'fail users': rest.get('/users', usersFail),
@@ -59,7 +65,8 @@ You could also skip step 4 and use the UI to set scenarios directly from the bro
 
 ```typescript
 // router/index.js
-import MSWUI from 'msw-ui/src/components/MSW-UI.vue';
+import MSWUI from 'msw-ui/src/MSW-UI.vue';
+import { scenariosPerHandler } from '@/mocks';
 
 const routes: Array<RouteRecordRaw> = [
   // ...
@@ -67,6 +74,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/msw-ui',
     name: 'MSW UI',
     component: MSWUI,
+    props: { scenariosPerHandler },
   },
 ];
 ```

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../components/Home.vue';
-import MSWUI from '../components/MSW-UI.vue';
+import MSWUI from 'msw-ui/src/MSW-UI.vue';
+import { scenariosPerHandler } from '@/mocks';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/msw-ui',
     name: 'MSW UI',
     component: MSWUI,
+    props: {
+      scenariosPerHandler,
+    },
   },
 ];
 

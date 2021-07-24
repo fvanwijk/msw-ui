@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -43,8 +43,9 @@
       "limit": "10 KB"
     }
   ],
-  "dependencies": {
-    "msw": "0.33.0"
+  "peerDependencies": {
+    "msw": ">=0.25",
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "5.0.1",
@@ -52,6 +53,7 @@
     "size-limit": "5.0.1",
     "tsdx": "0.14.1",
     "tslib": "2.3.0",
-    "typescript": "4.3.5"
+    "typescript": "4.3.5",
+    "yorkie": "2.0.0"
   }
 }

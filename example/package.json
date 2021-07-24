@@ -1,7 +1,7 @@
 {
   "name": "msw-ui-example",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "author": "Frank van Wijk <info@frankvanwijk.nl>",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,8 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "msw-ui": "0.2.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",

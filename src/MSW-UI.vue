@@ -6,6 +6,7 @@
     <button @click="setScenario('fail')">Fail</button>
 
     <h2>Set scenario per handler</h2>
+
     <table>
       <thead>
         <tr>
@@ -39,21 +40,27 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { setScenario, setScenarioForHandler } from '../../../src';
-import { scenariosPerHandler } from '@/mocks';
+import { RestHandler } from 'msw';
+import { computed, defineComponent, PropType } from 'vue';
+import { setScenario, setScenarioForHandler } from '.';
 
 export default defineComponent({
   name: 'Home',
-  setup() {
+  props: {
+    scenariosPerHandler: {
+      required: true,
+      type: Object as PropType<Record<string, Record<string, RestHandler>>>,
+    },
+  },
+  setup(props) {
     return {
       handlers: computed(() =>
-        Object.keys(scenariosPerHandler).map(header => {
+        Object.keys(props.scenariosPerHandler).map(header => {
           const [method, mask] = header.split(' ');
+          console.log({ header, method, mask });
           return { header, method, mask };
         })
       ),
-      scenariosPerHandler,
       setScenario,
       setScenarioForHandler,
     };
