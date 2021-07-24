@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { setScenario, setScenarioForHandler } from '../msw-ui';
+import { setScenario, setScenarioForHandler } from '../../../src';
 import { scenariosPerHandler } from '@/mocks';
 
 export default defineComponent({
