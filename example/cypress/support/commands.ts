@@ -28,29 +28,18 @@
 declare namespace Cypress {
   interface Chainable {
     /**
-     * Custom command to set a MSW UI global scenario based.
+     * Custom command to set a MSW UI scenario
      * @example cy.setScenario('success');
      */
     setScenario(scenarioName: string): Chainable<Element>;
-    /**
-     * Custom command to set a MSW UI scenario based on handler name and scenario name.
-     * @example cy.setScenarioForHandler('GET /users', 'success');
-     */
-    setScenarioForHandler(handlerName: string, scenarioName: string): Chainable<Element>;
   }
   interface Window {
     setScenario: (scenarioName: string) => void;
-    setScenarioForHandler: (handlerName: string, scenarioName: string) => void;
   }
 }
 
 Cypress.Commands.add('setScenario', scenarioName => {
   return cy.window().then(window => {
     window.setScenario(scenarioName);
-  });
-});
-Cypress.Commands.add('setScenarioForHandler', (handlerName, scenarioName) => {
-  return cy.window().then(window => {
-    window.setScenarioForHandler(handlerName, scenarioName);
   });
 });

@@ -13,5 +13,4 @@ declare global {
 
 declare interface Window {
   setScenario: any;
-  setScenarioForHandler: any;
 }

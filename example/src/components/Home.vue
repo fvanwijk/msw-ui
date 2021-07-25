@@ -26,7 +26,6 @@
 import { defineComponent } from 'vue';
 import { useQuery } from 'vue-query';
 import { fetchUser, fetchUsers } from './user-service';
-import { scenariosPerHandler } from '@/mocks';
 
 export default defineComponent({
   name: 'Home',
@@ -49,7 +48,6 @@ export default defineComponent({
       errorUsers,
       loadingUser,
       loadingUsers,
-      scenariosPerHandler,
       refetchUser,
       refetchUsers,
       user,
