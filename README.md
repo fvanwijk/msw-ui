@@ -1,18 +1,22 @@
-# Mock Service Worker UI
+<h1 align="center">Mock Service Worker UI</h1>
+
+<p align="center">Change predefined MSW handlers on run time via the user interface</p>
+
+## Features
 
 [Mock Service Worker](https://mswjs.io) is an awesome tool to setup mock responses for HTTP calls in the browser or in Node.
 
 One of the benefits is that you can mock all requests to external APIs with a static mock reponse for rapid prototyping or quick local frontend development.
 
-The nature of MSW is that all mocked handlers are set using code and the MSW client runs inside your application. This makes it hard to override handlers.
+The nature of MSW is that all mocked handlers are set using code and the MSW client runs inside your application. This makes it hard to override handlers in a running application without making code changes.
 
-MSW-UI is an extension on top of MSW that allows you to set new mock handlers on run time, based on scenarios. A scenario is in fact a preset to set one or multiple handlers at once.
+MSW UI is an extension on top of MSW that allows you to set new mock handlers on run time, based on scenarios. A scenario is in fact a preset to set one or multiple handlers at once.
 Then it is just as simple as calling `setScenario('badrequest')` somewhere in your code to activate the 'badrequest' scenario that you have defined upfront.
 
-To prevent you from mixing `setScenario` calls with production code, this library also contains a Vue page component that you can conditionally load in Vue router only when `process.NODE_ENV === 'development'`. This is to ensure that you never ship any MSW-UI (or MSW) code to production.
+To prevent you from mixing `setScenario` calls with production code, this library also contains a Vue page component that you can conditionally load in Vue router only when `process.NODE_ENV === 'development'`. This is to ensure that you never ship any MSW UI (or MSW) code to production.
 This component renders a simple but effective UI to quickly activate one of the scenarios.
 
-![MSW-UI](./msw-ui.png)
+![MSW UI](./msw-ui.png)
 
 ## How to use
 
@@ -22,6 +26,7 @@ This component renders a simple but effective UI to quickly activate one of the 
 
 ```typescript
 // mocks.ts
+import { RestHandler } from 'msw';
 
 const usersSuccess: RestHandler = rest.get('/users', (req, res, ctx) =>
   res(
@@ -48,19 +53,19 @@ export const scenarios: Record<string, RestHandler[]> = {
 };
 ```
 
-4. Register the scenarios with MSW-UI. Usually you do this after the `setupWorker()` call
+4. Register the scenarios with MSW UI. Usually you do this after the `setupWorker()` call
 
 ```typescript
 import { register } from 'msw-ui';
 import { scenarios } from './mocks';
 
-const worker = setupWorker(); // Do not pass initial handlers directly to setupWorker
+const worker = setupWorker();
 register(worker, scenarios);
 ```
 
 5. Somewhere in your code call `setScenario('success')` to set handlers for the 'success' scenario.
 
-You could also skip step 4 and use the UI to set scenarios directly from the browser.
+You could also skip step 5 and use the UI to set scenarios directly from the browser.
 
 6. Integrate the page component into your Vue app that has Vue Router enabled (sorry no support for other frameworks or vanilla JS yet, but you could easily create something yourself):
 
@@ -85,15 +90,23 @@ if (process.env.NODE_ENV === 'development') {
 
 ## Future work
 
-- When you hard refresh the page, the MSW client is reinitialized so that all handlers that were set after initialization are gone. You also can't see which scenarios are currently active. MSW is designed to set handlers only once when the application initializes. Persisting scenarios that are active will be implemented in MSW-UI, so that you can restore state after refreshing the browser.
-- Theoretically all the scenario stuff should also work in Node but I haven't tested it yet. The use case is also less strong because usually you use MSW in unit tests and you will set mocks manually during a specific test.
+MSW is designed to set handlers only once when the application initializes. It doesn't expect you to override handlers via user actions. This means that when you refresh the page, all handlers are reset.
+
+To overcome this, we have to persist handlers so that you can restore state after refreshing the browser. MSW UI doesn't see which handlers are registered via `setupWorker` or `worker.use`, but we know when `setScenario` is called. Instead of persisting handlers, we can persist which scenarios are active. Therefore is it advised when you use MSW UI not so set handlers directly on the worker, but always use scenarios.
+
+This also allows us to list the scenarios that are currently active.
+
+### NodeJs
+
+Theoretically all the scenario stuff should also work in Node but I haven't tested it yet. The use case is also less strong because usually you use MSW in unit tests and you will set mocks manually during a specific test.
 
 ## Run example locally
 
 To see how it works, clone this repo and install dependencies and start the dev server on http://localhost:8080.
-Don't forget to open your browser development tools to see MSW and MSW-UI logging.
+Don't forget to open your browser development tools to see MSW and MSW UI logging.
 
 ```
+cd example
 npm install
 npm run serve
 ```
