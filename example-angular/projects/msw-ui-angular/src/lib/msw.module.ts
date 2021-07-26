@@ -10,17 +10,10 @@ import { MSWUIComponent } from './msw-ui.component';
   exports: [RouterModule],
 })
 export class MSWModule {
-  static forRoot(
-    scenarios: Record<string, RestHandler | RestHandler[]>,
-    setScenario: (scenario: string) => void
-  ): ModuleWithProviders<MSWModule> {
+  static forRoot(scenarios: Record<string, RestHandler | RestHandler[]>): ModuleWithProviders<MSWModule> {
     return {
       ngModule: MSWModule,
-      providers: [
-        MSWUIComponent,
-        { provide: 'scenarios', useValue: scenarios },
-        { provide: 'setScenario', useValue: setScenario },
-      ],
+      providers: [MSWUIComponent, { provide: 'scenarios', useValue: scenarios }],
     };
   }
 }

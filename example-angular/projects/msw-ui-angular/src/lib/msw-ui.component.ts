@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { RestHandler } from 'msw';
+import { setScenario } from 'msw-ui';
 
 @Component({
   selector: 'app-msw-ui',
@@ -24,10 +25,8 @@ import { RestHandler } from 'msw';
   ],
 })
 export class MSWUIComponent {
-  constructor(
-    @Inject('scenarios') private scenarios: Record<string, RestHandler | RestHandler[]>,
-    @Inject('setScenario') public setScenario: (scenario: string) => void
-  ) {}
+  constructor(@Inject('scenarios') private scenarios: Record<string, RestHandler | RestHandler[]>) {}
+  setScenario = setScenario;
 
   get globalScenarios() {
     return Object.entries(this.scenarios)
