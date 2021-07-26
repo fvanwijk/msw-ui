@@ -1,0 +1,30 @@
+<div style="width: 1000px">
+  <h1>MSW UI</h1>
+  <h2>Set global scenario</h2>
+  <button *ngFor="let scenario of globalScenarios" (click)="setScenario(scenario)">
+    {{ scenario }}
+  </button>
+
+  <h2>Set scenario per handler</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Path</th>
+        <th>Scenario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let endpoint of scenariosPerHandler">
+        <td>{{ endpoint.method }}</td>
+        <td>{{ endpoint.path }}</td>
+        <td>
+          <button *ngFor="let scenario of endpoint.scenarios" (click)="setScenario(scenario)">
+            {{ scenario }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "tsdx build && cd example-angular && npm run build msw-ui-angular && npm run copy-lib",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -45,7 +45,10 @@
   ],
   "peerDependencies": {
     "msw": ">=0.25",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "@angular/common": ">=9",
+    "@angular/core": ">=9",
+    "@angular/router": ">=9"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "5.0.1",

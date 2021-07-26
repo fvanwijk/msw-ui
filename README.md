@@ -69,9 +69,11 @@ You could also skip step 5 and use the UI to set scenarios directly from the bro
 
 6. Integrate the page component into your Vue app that has Vue Router enabled (sorry no support for other frameworks or vanilla JS yet, but you could easily create something yourself):
 
+### VueJS
+
 ```typescript
-// router/index.js
-import MSWUI from 'msw-ui/src/MSW-UI.vue';
+// router/index.ts
+import MSWUI from 'msw-ui/src/vue/MSW-UI.vue';
 import { scenarios } from '@/mocks';
 
 if (process.env.NODE_ENV === 'development') {
@@ -84,6 +86,27 @@ if (process.env.NODE_ENV === 'development') {
     },
   });
 }
+```
+
+### Angular
+
+Conditionally import `MSWModule` and it will add the page to your app.
+
+```typescript
+// app-routing.module.ts
+import { MSWModule } from 'msw-ui/dist/angular';
+import { scenarios } from './mocks';
+
+let mswModule = [];
+if (process.env.NODE_ENV === 'development') {
+  mswModule = [MSWModule.forRoot(scenarios)];
+}
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes), ...mswModule],
+  exports: [RouterModule],
+})
+
 ```
 
 7. Visit `/msw-ui` in your local app
@@ -100,13 +123,40 @@ This also allows us to list the scenarios that are currently active.
 
 Theoretically all the scenario stuff should also work in Node but I haven't tested it yet. The use case is also less strong because usually you use MSW in unit tests and you will set mocks manually during a specific test.
 
-## Run example locally
+## Run example (Vue)
 
 To see how it works, clone this repo and install dependencies and start the dev server on http://localhost:8080.
 Don't forget to open your browser development tools to see MSW and MSW UI logging.
 
 ```
-cd example
+cd example-vue
 npm install
 npm run serve
 ```
+
+## Run example (Angular)
+
+To see how it works, clone this repo and install dependencies and start the dev server on http://localhost:4200.
+Don't forget to open your browser development tools to see MSW and MSW UI logging.
+
+```
+cd example-angular
+npm install
+npm run build msw-ui-angular
+npm start
+```
+
+## Development
+
+This is a TSdx project, so all relevant scripts related to the TS src are in package.json.
+
+The Vue component can be imported directly from `msw-ui/src/MSW-UI.vue`.
+The Angular module must be imported from dist so that means we have to build it.
+It is developed as an Angular Library so you have to run from `example-angular`:
+
+```
+npm run build msw-ui-angular // build to library for use in the example app
+npm run copy-lib // copy the built files to dist
+```
+
+This is done automatically when you run `npm publish` (`prepare` script).
